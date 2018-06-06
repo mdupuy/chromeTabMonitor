@@ -1,5 +1,5 @@
 # chromeTabMonitor
-Sometimes chrome tabs get CPU hungry, whether malicious javascript is mining bitcoin or some simple web app memory leaked all over the place after leaving it open a few days (Office365, Google Keep, etc.). This is a very simple bash script that will aid in monitoring runaway Google Tabs on a Mac (or Linux with some minor mods)
+Sometimes chrome tabs get CPU hungry, whether malicious javascript is mining bitcoin or some simple web app memory leaked all over the place after leaving it open a few days (Office365, Google Keep, etc.). This is a very simple bash script that will aid in monitoring runaway Google Tabs on a Mac, Linux and probably Win10 if you have the dev tools with bash installed.
 
 ## bash script
 You can see the defaults at the top of the file. cpuThreshold is 80% per tab by default but this script will accept one command line arg to change that value. It'll watch the top 4 processes by default. Usually only the main Chrome app and one tab are offensive in my expirience. Feel free to dial this back to "2" or extend it if you want.
@@ -10,9 +10,9 @@ On a Mac, the most native (but perhaps unfamiliar) method to do this is making a
 
     launchctl load -wF ~/Library/LaunchAgents/some.60second.name.plist
 
-Initially, I created this with just a bash/terminal and a textual input for interactive "yes/no" killing of runaway processes. which is useful for debug or Linux or even Windows 10 bash. You can uncomment that "read" line and delete the "osascript" block if you want to make this run on a non-Mac (Applescript enabled) platform. Currently, the script pops up a dialog box on the Mac asking if you want to kill a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill that tab.
+Currently, the script pops up a dialog box on the Mac asking if you want to kill a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill that tab. If you're on a non-Mac, it'll just prompt you for a y/n answer. The same timeout and default-to-kill rules apply.
 
-It'd be pretty easy to make this script understand if it is running on a Mac or something else (uname -s) and dialog or not dialog accordingly so if anyone other than me is interested in this feature let me know in the issue tracker.
+Feature requests? Let me know in the issue tracker.
 
 I've added some very dumb logic so that the initial Chrome parent process isn't ever offered up to die.
 
