@@ -1,5 +1,5 @@
 # chromeTabMonitor
-Sometimes chrome tabs get CPU hungry, whether malicious javascript is mining bitcoin or some simple web app memory leaked all over the place after leaving it open a few days (Office365, Google Keep, etc.). This is a very simple bash script that will aid in monitoring runaway Google Tabs on a Mac, Linux and probably Win10 if you have the dev tools with bash installed.
+Sometimes chrome tabs get CPU hungry, whether malicious javascript is mining bitcoin or some simple web app memory leaked all over the place after leaving it open a few days (Office365, Google Keep, etc.). This is a very simple bash script that will aid in monitoring runaway Chrome Tabs on a Mac, Linux and probably Win10 if you have the dev tools with bash installed.
 
 ## Optional Dependency
 If you have the cpulimit command installed, the default behavior will be to throttle the cpu utilization to the user defined limit the offending pid rather than kill it.
