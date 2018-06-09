@@ -6,9 +6,18 @@ userInputTimeout=10
 cpulimit=2
 lastRun=/tmp/chromePIDListLastRun
 
+
 if [ $1 ]; then
-	echo "setting cpuThreshold to $1%"
-	cpuThreshold=$1
+	if [ "$1" -eq "$1" ] 2>/dev/null; then
+		#echo number
+		echo "setting cpuThreshold to $1%"
+		cpuThreshold=$1
+	elif [ "$1" == "k" ]; then
+		#echo not a number
+		echo "removing all cpulimits"
+		killall cpulimit
+		exit 0
+	fi
 fi
 
 list=$(ps -rA -o %cpu -o pid,command|grep [G]oogle\ Chrome|head -n$numberOfChromePIDsToWatch | awk '{print $1 " " $2 }')
