@@ -3,6 +3,7 @@
 numberOfChromePIDsToWatch=4
 cpuThreshold=80
 userInputTimeout=10
+cpulimit=2
 lastRun=/tmp/chromePIDListLastRun
 
 if [ $1 ]; then
@@ -32,7 +33,7 @@ for((i=1; $i < $(($numberOfChromePIDsToWatch * 2 + 1)); i++)); do
 	fi
 done
 
-headProcessPID=$(pgrep Google Chrome.app|head -n1)
+headProcessPID=$(pgrep -oi Google Chrome)
 
 for pid in $pidList; do
 	if [ $pid -eq $headProcessPID ];then
@@ -46,7 +47,7 @@ for pid in $pidList; do
                 	osascript -e 'tell application "System Events"' \
                 	-e 'set frontmostApplicationName to name of 1st process whose frontmost is true' \
                 	-e 'end tell' \
-                	-e 'tell app "System Events" to display dialog "'"Chrome PID ${pid//\"/\\\"} over ${cpuThreshold//\"/\\\"}%. Kill it?"'" buttons {"Cancel","OK"} default button "OK" giving up after "'"$userInputTimeout"'"' \
+                	-e 'tell app "System Events" to display dialog "'"Chrome PID ${pid//\"/\\\"} over ${cpuThreshold//\"/\\\"}%. Kill or cpulimit it?"'" buttons {"Cancel","OK"} default button "OK" giving up after "'"$userInputTimeout"'"' \
                 	-e 'tell application frontmostApplicationName' \
                 	-e 'activate' \
                 	-e 'end tell'
@@ -62,11 +63,18 @@ for pid in $pidList; do
 		fi
 
 		if [[ $REPLY =~ ^[Yy]$ ]]; then
-			kill $pid
+			if type cpulimit >> /dev/null; then
+				cpulimit --pid $pid --limit $cpulimit&
+				echo "Throttling $pid to $cpulimit%"
+			else
+				echo "Killing $pid"
+				kill -15 $pid
+			fi
 		fi
 	fi
 done
 
+ps ax|grep [c]pulimit |cut -d ' ' -f2-20
 echo $pidList > $lastRun
 
 exit 0
