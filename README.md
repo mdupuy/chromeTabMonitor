@@ -6,7 +6,18 @@ If you have the cpulimit command installed, the default behavior will be to thro
 
     brew/apt install cpulimit
 
+## Application Bundle (for non-Terminal loving Mac users)
+For those that don't know what bash is and aren't familiar with the Terminal, I've made a Mac Application that you can double-click to run. You can [download](https://github.com/mdupuy/chromeTabMonitor/archive/master.zip), unzip and open the app (you'll probably have to right click and select open the first time you run it). It will open a small terminal window in the upper-left-hand corner of your screen and watch for Chrome tabs with heavy CPU utilization once a minute. The output should be pretty easy to understand. To kill the tab monitor, simply close the terminal window and click the "Terminate" button when it appears.
+
+Consider installing the cpulimit command by first installing [Homebrew](https://brew.sh/) and then running
+
+    brew install cpulimit
+   
+in the Terminal.
+
 ## chromeMon.sh bash script
+For the rest of us nerds that want to run the bash script via LaunchCtl, cron or the watch command and tweak settings:
+
 You can see the defaults at the top of the file. cpuThreshold is 80% per tab by default but this script will accept one command line arg to change that value. It'll watch the top 4 processes by default. Usually only the main Chrome app and one tab are offensive in my expirience. Feel free to dial this back to "2" or extend it if you want.
 
 I suggest running this once a minute with any mechanism you prefer. If a tab is eating more CPU than your threshold for two runs of this script in a row, you'll be given an option to kill or cpulimit that tab. Most tabs will go over your CPU usage threshold while they render but the page renders should take less than a minute (or whatever interval you choose). Of course, playing any sort of media might run longer. You might want to set the default action to not kill the process after if the user doesn't intervene rather than actively kill it.
