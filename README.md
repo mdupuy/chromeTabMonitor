@@ -7,7 +7,7 @@ If you have the cpulimit command installed, the default behavior will be to thro
     brew/apt install cpulimit
 
 ## Application Bundle (for non-Terminal loving Mac users)
-For those that don't know what bash is and aren't familiar with the Terminal, I've made a Mac Application that you can double-click to run. You can [download](https://github.com/mdupuy/chromeTabMonitor/archive/master.zip), unzip and open the app (you'll probably have to right click and select open the first time you run it). It will open a small terminal window in the upper-left-hand corner of your screen and watch for Chrome tabs with heavy CPU utilization once a minute. The output should be pretty easy to understand. To kill the tab monitor, simply close the terminal window and click the "Terminate" button when it appears.
+For those that don't know what bash is and aren't familiar with the Terminal, I've made a Mac Application that you can double-click to run. You can [download](https://github.com/mdupuy/chromeTabMonitor/archive/master.zip), unzip and open the app (you'll probably have to right click and select open the first time you run it). It will open a small terminal window in the upper-left-hand corner of your screen and watch for Chrome tabs with heavy CPU utilization once a minute. The output is simple to read but you can ignore it. If a tab eats up too much CPU for a long time, a dialog box on the Mac asking if you want to kill or cpulimit a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill or cpulimit that tab. To stop this app, simply close the terminal window and click the "Terminate" button when it appears.
 
 Consider installing the cpulimit command by first installing [Homebrew](https://brew.sh/) and then running
 
@@ -15,8 +15,8 @@ Consider installing the cpulimit command by first installing [Homebrew](https://
    
 in the Terminal.
 
-## chromeMon.sh bash script
-For the rest of us nerds that want to run the bash script via LaunchCtl, cron or the watch command and tweak settings:
+## chromeMon.sh bash script (and nerdy details)
+For the rest you that want to run the bash script at your own interval via LaunchCtl, cron or the watch command and tweak settings:
 
 You can see the defaults at the top of the file. cpuThreshold is 80% per tab by default but this script will accept one command line arg to change that value. It'll watch the top 4 processes by default. Usually only the main Chrome app and one tab are offensive in my expirience. Feel free to dial this back to "2" or extend it if you want.
 
@@ -26,11 +26,9 @@ On a Mac, the most native (but perhaps unfamiliar) method to do this is making a
 
     launchctl load -wF ~/Library/LaunchAgents/some.60second.name.plist
 
-Currently, the script pops up a dialog box on the Mac asking if you want to kill or cpulimit a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill or cpulimit that tab. If you're on a non-Mac, it'll just prompt you for a y/n answer. The same timeout and default-to-kill/limit rules apply.
+The script pops up a dialog box on the Mac asking if you want to kill or cpulimit a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill or cpulimit that tab. If you're on a non-Mac, it'll prompt you for a y/n answer at the terminal. The same timeout and default-to-kill/limit rules apply if you're running non-interactively.
 
 Feature requests? Let me know in the issue tracker.
-
-I've added some very dumb logic so that the initial Chrome parent process isn't ever offered up to die.
 
 Other ways to run this at a given interval from the terminal. Install the watch command, i.e. brew install watch
 
@@ -38,7 +36,7 @@ Other ways to run this at a given interval from the terminal. Install the watch 
     
 Simple bash
 
-    while true; do chromeMon.sh; sleep 60; done
+    while true; do clear; echo 'Chrome Tab Monitor:'; chromeMon.sh; sleep 60; done
     
 On Linux, using "crontab -e", add the line:
 
