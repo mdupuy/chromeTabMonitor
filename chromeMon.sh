@@ -20,7 +20,14 @@ if [ $1 ]; then
 	fi
 fi
 
-list=$(ps -rA -o %cpu -o pid,command|grep [G]oogle\ Chrome|head -n$numberOfChromePIDsToWatch | awk '{print $1 " " $2 }')
+os=$(uname -s)
+if [ "$os" == "Darwin" ]; then 
+	list=$(ps -rA -o %cpu -o pid,command|grep [G]oogle\ Chrome|head -n$numberOfChromePIDsToWatch | awk '{print $1 " " $2 }')
+else
+#elif [ "$os" == "Linux" ]; then
+	list=$(ps -A -o %cpu,pid,command --sort -%cpu|grep [G]oogle\ Chrome|head -n$numberOfChromePIDsToWatch | awk '{print $1 " " $2 }')
+fi
+
 if [ -z "$list" ]; then
 	#echo "Chrome not running"
 	exit 0
@@ -35,7 +42,7 @@ for((i=1; $i < $(($numberOfChromePIDsToWatch * 2 + 1)); i++)); do
 	fi
 	i=$(($i+1))
 	pid=$(echo $list| cut -d ' ' -f$i)
-	echo cpu $cpu pid $pid
+	echo "Process ID: $pid	CPU $cpu%"
 	if [ $cpu -gt $cpuThreshold ]; then
 		pidList="$pid $pidList"
 		#echo $pidList
