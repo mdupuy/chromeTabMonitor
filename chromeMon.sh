@@ -5,6 +5,7 @@ cpuThreshold=80
 userInputTimeout=10
 cpulimit=2
 lastRun=/tmp/chromePIDListLastRun
+cpulimitList=/tmp/cpulimitChromeMon
 
 
 if [ $1 ]; then
@@ -13,10 +14,22 @@ if [ $1 ]; then
 		echo "setting cpuThreshold to $1%"
 		cpuThreshold=$1
 	elif [ "$1" == "k" ]; then
-		#echo not a number
+		#echo not a number, this is a kill command
 		echo "removing all cpulimits"
-		killall cpulimit
+		chromePIDs=$(pgrep Chrome)
+		ps A |grep [c]pulimit > $cpulimitList
+		for pid in $chromePIDs; do 
+			limitPID=$(fgrep $pid $cpulimitList | awk '{print $1}')
+			if [ ! -z $limitPID ]; then
+				echo killing $limitPID
+				kill $limitPID
+			fi
+		done
+		rm $cpulimitList
 		exit 0
+	else
+		echo "valid arguments are a number for the cpuThreshold or 'k' to kill cpulimits"
+		exit 1
 	fi
 fi
 
@@ -90,7 +103,7 @@ for pid in $pidList; do
 	fi
 done
 
-ps ax|grep [c]pulimit |cut -d ' ' -f2-20
+ps A|grep [c]pulimit |cut -d ' ' -f2-20
 echo $pidList > $lastRun
 
 exit 0
