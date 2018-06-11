@@ -12,7 +12,7 @@ If you have the cpulimit command installed, the default behavior will be to thro
 
     .. code-block:: bash
     
-        $ brew/apt install cpulimit
+    $ brew/apt install cpulimit
         
 
 Application Bundle (for non-Terminal loving Mac users)
@@ -27,7 +27,7 @@ Consider installing the cpulimit command by first installing `Homebrew`_ and the
 
     .. code-block:: bash
     
-        $ brew install cpulimit
+    $ brew install cpulimit
    
 in the Terminal.
 
@@ -45,7 +45,7 @@ On a Mac, the most native (but perhaps unfamiliar) method to do this is making a
 
     .. code-block:: bash
     
-        $ launchctl load -wF ~/Library/LaunchAgents/some.60second.name.plist
+    $ launchctl load -wF ~/Library/LaunchAgents/some.60second.name.plist
 
 The script pops up a dialog box on the Mac asking if you want to kill or cpulimit a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill or cpulimit that tab. If you're on a non-Mac, it'll prompt you for a y/n answer at the terminal. The same timeout and default-to-kill/limit rules apply if you're running non-interactively.
 
@@ -55,16 +55,16 @@ Other ways to run this at a given interval from the terminal. Install the watch 
 
     .. code-block:: bash
     
-        $ watch -n60 path/to/this/script/chromeMon.sh
+    $ watch -n60 path/to/this/script/chromeMon.sh
     
 Simple bash
 
     .. code-block:: bash
     
-        $ while true; do clear; echo 'Chrome Tab Monitor:'; chromeMon.sh; sleep 60; done
+    $ while true; do clear; echo 'Chrome Tab Monitor:'; chromeMon.sh; sleep 60; done
     
 On Linux, using "crontab -e", add the line:
 
     .. code-block:: bash
     
-        */1 * * * * path/to/this/script/chromeMon.sh
+    */1 * * * * path/to/this/script/chromeMon.sh
