@@ -2,8 +2,9 @@ chromeTabMonitor
 ===============================================================================
 Sometimes chrome tabs get CPU hungry, whether malicious javascript is mining bitcoin or some simple web app memory leaked all over the place after leaving it open a few days (Office365, Google Keep, etc.). This is a very simple bash script that will aid in monitoring runaway Chrome Tabs on a Mac, Linux and probably Win10 if you have the dev tools with bash installed. This is similar to "The Great Suspender" extension in that you can reload suspended tabs but better because it only suspends or cpulimits tabs that are being offensive. 
 
+.. raw:: html
 
-
+    <img src="https://raw.githubusercontent.com/mdupuy/chromeTabMonitor/gh-pages/terminal.png" height="150px">
 
 
 Optional Dependency
@@ -13,6 +14,10 @@ If you have the cpulimit command installed, the default behavior will be to thro
     .. code-block:: bash
     
     $ brew/apt install cpulimit
+
+.. raw:: html
+
+    <img src="https://raw.githubusercontent.com/mdupuy/chromeTabMonitor/gh-pages/limit.png" height="150px">
         
 
 Application Bundle (for non-Terminal loving Mac users)
@@ -20,6 +25,10 @@ Application Bundle (for non-Terminal loving Mac users)
 For those that don't know what bash is and aren't familiar with the Terminal, I've made a Mac Application that you can double-click to run. You can `download`_, unzip and open the app (you'll probably have to right click and select open the first time you run it). It will open a small terminal window in the upper-left-hand corner of your screen and watch for Chrome tabs with heavy CPU utilization once a minute. The output is simple to read but you can ignore it. If a tab eats up too much CPU for a long time, a dialog box on the Mac asking if you want to kill or cpulimit a CPU heavy task. If you hit cancel within 10 seconds, the task will be left alone. If you hit ok or wait 10 seconds, this script will kill or cpulimit that tab. To stop this app, simply close the terminal window and click the "Terminate" button when it appears.
 
    .. _download: https://github.com/mdupuy/chromeTabMonitor/archive/master.zip
+
+.. raw:: html
+
+    <img src="https://raw.githubusercontent.com/mdupuy/chromeTabMonitor/gh-pages/dialog.png" height="150px">
 
 Consider installing the cpulimit command by first installing `Homebrew`_ and then running
 
