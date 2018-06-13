@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Script by Matthew DuPuy
+# https://github.com/mdupuy/chromeTabMonitor
+# Apache License 2.0
+# https://github.com/mdupuy/chromeTabMonitor/blob/master/LICENSE
+version=0
+
 numberOfChromePIDsToWatch=4
 cpuThreshold=80
 userInputTimeout=10
@@ -7,6 +13,9 @@ cpulimit=2
 lastRun=/tmp/chromePIDListLastRun
 cpulimitList=/tmp/cpulimitChromeMon
 
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#PATH=$PATH:"$DIR"
+#cpulimit -h
 
 if [ $1 ]; then
 	if [ "$1" -eq "$1" ] 2>/dev/null; then
@@ -55,7 +64,7 @@ for((i=1; $i < $(($numberOfChromePIDsToWatch * 2 + 1)); i++)); do
 	fi
 	i=$(($i+1))
 	pid=$(echo $list| cut -d ' ' -f$i)
-	echo "Process ID: $pid	CPU $cpu%"
+	echo "Process ID: $pid 	CPU $cpu%"
 	if [ $cpu -gt $cpuThreshold ]; then
 		pidList="$pid $pidList"
 		#echo $pidList
