@@ -4,7 +4,7 @@
 # https://github.com/mdupuy/chromeTabMonitor
 # Apache License 2.0
 # https://github.com/mdupuy/chromeTabMonitor/blob/master/LICENSE
-version=1
+version=0
 
 numberOfChromePIDsToWatch=4
 cpuThreshold=80
