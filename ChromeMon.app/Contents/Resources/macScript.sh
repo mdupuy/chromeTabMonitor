@@ -25,7 +25,7 @@ newVersion=$(curl --connect-timeout 2 -s https://raw.githubusercontent.com/mdupu
 if ! [ -z $newVersion ]; then
 	#echo newVersion $newVersion
 	myVersion=$(fgrep version= "$DIR/chromeMon.sh"|head -n1|cut -d = -f2)
-	if [ "$newVersion" > "$myVersion" ]; then 
+	if [ "$newVersion" -gt "$myVersion" ]; then 
 		echo "Git version $newVersion, my version $myVersion"
 		osascript -e 'tell app "System Events" to display dialog "'"There is a new version of ChromeTabMonitor available. Do you wish to download it?"'" buttons {"Cancel","OK"} default button "Cancel" giving up after "10"'
 		if [ "$?" -eq "0" ]; then
